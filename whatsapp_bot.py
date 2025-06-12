@@ -20,9 +20,6 @@ twilio_client = Client(
 
 app = Flask(__name__)
 
-app.run(host='0.0.0.0', port=10000, debug=True)
-
-
 def format_whatsapp_number(number):
     """Ensure WhatsApp numbers are in valid E.164 format"""
     if not number:
@@ -87,5 +84,5 @@ def whatsapp_webhook():
 
 
 if __name__ == '__main__':
-    # Environment verification
-    pass 
+    app.run(host='0.0.0.0', port=10000, debug=True)
+    
