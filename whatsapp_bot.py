@@ -8,7 +8,7 @@ import os
 load_dotenv()
 
 # Restaurant configuration
-RESTAURANT_NAME = "Gourmet Delight"
+RESTAURANT_NAME = "Restaurante Gourmet IA"
 MENU_PDF_URL = "https://dl.dropboxusercontent.com/scl/fi/fhclk798pmzghu8ozveb1/cardapio-pizzas.pdf?rlkey=5rxix01lbday155wq0rapxfrn&st=sldem1iq"
 
 # Initialize clients
@@ -41,14 +41,15 @@ def whatsapp_webhook():
         if not incoming_msg or not sender:
             return jsonify({'error': 'Missing Body or From'}), 400
 
-        # Case 1: Menu request
-        if 'menu' in incoming_msg or 'pdf' in incoming_msg:
+        # Case 1: Menu request        
+        menu_keywords = ['menu', 'pdf', 'cardápio', 'cardapio', 'carta', 'lista']
+        if any(keyword in incoming_msg for keyword in menu_keywords):
             try:
                 twilio_client.messages.create(
                     media_url=[MENU_PDF_URL],
                     from_=os.getenv('TWILIO_WHATSAPP_NUMBER'),
                     to=sender,
-                    body=f"Here's the menu for {RESTAURANT_NAME}! 🍽️"
+                    body=f"Aqui está o cardápio do {RESTAURANT_NAME}! 🍽️"
                 )
                 return jsonify({'success': True})
             except Exception as e:
@@ -58,11 +59,29 @@ def whatsapp_webhook():
         try:
             response = openai_client.chat.completions.create(                
                 model="gpt-3.5-turbo",
+                system_message = f"""
+                                You are an assistant for {RESTAURANT_NAME}. Your responsibilities include:
+                                1. Offering to send our digital menu when customers ask
+                                2. Answering questions about our restaurant
+                                3. Providing friendly, concise responses
+                                
+                                When users request the menu:
+                                - Confirm you'll send it
+                                - Briefly mention 1-2 popular dishes
+                                - Don't list the full menu (they'll see the PDF)
+                                
+                                For other questions:
+                                - Keep answers under 2 sentences
+                                - Be warm and professional
+                                - Always answer in Portuguese                                
+                                """            
                 messages=[
-                    {"role": "system", "content": f"You are a helpful assistant for {RESTAURANT_NAME}."},
+                    {"role": "system", "content": system_message},
                     {"role": "user", "content": incoming_msg}
-                ]
+                ],
+                temperature=0.7  # Adds slight creativity
             )
+
             reply = response.choices[0].message.content
 
         #except OpenAI.RateLimitError:
