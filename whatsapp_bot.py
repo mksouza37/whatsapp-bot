@@ -57,9 +57,7 @@ def whatsapp_webhook():
 
         # Case 2: General question
         try:
-            response = openai_client.chat.completions.create(                
-                model="gpt-3.5-turbo",
-                system_message = f"""
+            system_message = f"""
                                 You are an assistant for {RESTAURANT_NAME}. Your responsibilities include:
                                 1. Offering to send our digital menu when customers ask
                                 2. Answering questions about our restaurant
@@ -74,7 +72,9 @@ def whatsapp_webhook():
                                 - Keep answers under 2 sentences
                                 - Be warm and professional
                                 - Always answer in Portuguese                                
-                                """    ,        
+                                """           
+            response = openai_client.chat.completions.create(                
+                model="gpt-3.5-turbo",                
                 messages=[
                     {"role": "system", "content": system_message},
                     {"role": "user", "content": incoming_msg}
