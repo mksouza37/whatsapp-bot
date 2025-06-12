@@ -9,7 +9,7 @@ load_dotenv()
 
 # Restaurant configuration
 RESTAURANT_NAME = "Gourmet Delight"
-MENU_PDF_URL = "https://your-public-pdf-url.com/menu.pdf"
+MENU_PDF_URL = "https://drive.google.com/uc?export=download&id=1jSun651A5uuc6JzcvqtDBodb2MIBNSm1"
 
 # Initialize clients
 openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
