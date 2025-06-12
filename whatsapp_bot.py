@@ -57,7 +57,8 @@ def whatsapp_webhook():
         # Case 2: General question
         try:
             response = openai_client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4.1",
+                #model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": f"You are a helpful assistant for {RESTAURANT_NAME}."},
                     {"role": "user", "content": incoming_msg}
