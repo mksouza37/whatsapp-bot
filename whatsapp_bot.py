@@ -86,9 +86,4 @@ def whatsapp_webhook():
 
 if __name__ == '__main__':
     # Environment verification
-    print("\n=== ENVIRONMENT CHECK ===")
-    print("TWILIO_ACCOUNT_SID:", "✅ Found" if os.getenv('TWILIO_ACCOUNT_SID') else "❌ Missing")
-    print("OPENAI_API_KEY:", "✅ Found" if os.getenv('OPENAI_API_KEY') else "❌ Missing")
-    print("TWILIO_WHATSAPP_NUMBER:", "✅ Found" if os.getenv('TWILIO_WHATSAPP_NUMBER') else "❌ Missing")
-
-    app.run(debug=True)
+    pass 
