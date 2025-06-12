@@ -74,7 +74,7 @@ def whatsapp_webhook():
                                 - Keep answers under 2 sentences
                                 - Be warm and professional
                                 - Always answer in Portuguese                                
-                                """            
+                                """    ,        
                 messages=[
                     {"role": "system", "content": system_message},
                     {"role": "user", "content": incoming_msg}
