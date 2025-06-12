@@ -91,4 +91,4 @@ if __name__ == '__main__':
     print("OPENAI_API_KEY:", "✅ Found" if os.getenv('OPENAI_API_KEY') else "❌ Missing")
     print("TWILIO_WHATSAPP_NUMBER:", "✅ Found" if os.getenv('TWILIO_WHATSAPP_NUMBER') else "❌ Missing")
 
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(debug=True)
